@@ -12,7 +12,7 @@ pipeline {
                 // Replace this with your test commands
                 sh 'echo "Testing..."'
             }
-        
+        }
         stage('Deploy') {
             steps {
                 // Replace this with your deploy commands
