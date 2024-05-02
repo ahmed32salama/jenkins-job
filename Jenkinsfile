@@ -19,4 +19,15 @@ pipeline {
             }
         }
     }
+
+    post {
+        success {
+            // Notify success (optional)
+            echo 'Pipeline succeeded!'
+        }
+        failure {
+            // Notify failure (optional)
+            echo 'Pipeline failed!'
+        }
+    }
 }
