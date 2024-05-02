@@ -1,14 +1,14 @@
-**#Jenkins Automated Build and Test Setup with Git Flow**
+# Jenkins Automated Build and Test Setup with Git Flow
 
 This repository contains the setup and configuration for automating the build and testing process using Jenkins and the Git Flow branching model. Follow the steps below to set up and use this automation in your development workflow.
 
-**##Prerequisites**
+## Prerequisites
 
 GitHub account
 Git installed on the Jenkins server
 Jenkins installed and configured
 
-**##Prepare GitHub Repository**
+## Prepare GitHub Repository
 
 **1.Create or Select Repository:**
   -> Create a new GitHub repository or select an existing one for your project.
@@ -42,7 +42,7 @@ Jenkins installed and configured
   -> Enter the repository URL and credentials.
   -> Specify the branch to build (e.g., */develop).
 
-**##Implement Webhooks for Continuous Integration**
+## Implement Webhooks for Continuous Integration
 
 **1.GitHub Webhook Setup:**
   -> In GitHub, go to your repository settings and select "Webhooks".
@@ -56,7 +56,7 @@ Jenkins installed and configured
   -> With the webhook, Jenkins will trigger a new build every time changes are pushed to the connected branch.
 
 
-**##Testing and Validation**
+## Testing and Validation
 
 **1.Push Changes:**
   -> Push a change to the develop branch of your GitHub repository.
