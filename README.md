@@ -23,11 +23,11 @@ Jenkins installed and configured
   -> Install Git Flow tools if not already installed.
   -> Initialize Git Flow in your repository with default branch names.
   
-**Add Jenkinsfile:**
+**4.Add Jenkinsfile:**
   -> Add a Jenkinsfile to your repository in the root directory. Start with a simple pipeline.
 
 
-**##Configure Jenkins**
+## Configure Jenkins
 
 **1.Install Plugins:**
   -> Install necessary plugins in Jenkins, such as Git and Pipeline.
@@ -60,6 +60,7 @@ Jenkins installed and configured
 
 **1.Push Changes:**
   -> Push a change to the develop branch of your GitHub repository.
+  
 **2.Verify Jenkins Build:**
   -> Verify that Jenkins automatically triggers a build and processes according to the steps defined in the Jenkinsfile.
   -> Check the output in Jenkins to ensure the build and test stages are executed successfully.
