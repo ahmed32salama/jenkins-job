@@ -9,7 +9,7 @@ pipeline {
             }
             post {
                 success {
-                    echo 'Creating file archive...'
+                    echo 'Creating file archive'
                     archiveArtifacts artifacts: 'file1', allowEmptyArchive: true
                 }
                 failure {
@@ -40,7 +40,6 @@ pipeline {
         }
     }
 
-    // Define global post actions
     post {
         always {
             script {
@@ -49,7 +48,7 @@ pipeline {
                 echo "Sending email notification for ${jobName} - ${buildStatus}"
                 emailext subject: "Job Status: ${jobName} - ${buildStatus}",
                           body: "The job ${jobName} has finished with status: ${buildStatus}.\n\n${BUILD_URL}",
-                          to: '202018656@o6u.edu.eg'
+                          to: 'seaea.32@gmail.com'
             }
         }
     }
