@@ -6,7 +6,6 @@ pipeline {
             steps {
                 echo 'Building the project...'
                 sh 'touch file1'
-                // Add your build steps here
             }
             post {
                 success {
@@ -30,7 +29,6 @@ pipeline {
                 stage('Integration Test') {
                     steps {
                         echo 'Running integration tests...'
-                        // Add your integration test steps here
                     }
                 }
             }
@@ -38,7 +36,6 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying the project...'
-                // Add your deployment steps here
             }
         }
     }
