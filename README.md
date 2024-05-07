@@ -1,4 +1,4 @@
-# Setting up CI/CD Pipeline with Jenkins on AWS EC2
+# Automated Build and Test with Jenkins on EC2 Instance
 This guide walks you through setting up a Continuous Integration/Continuous Deployment (CI/CD) pipeline using Jenkins on an AWS EC2 instance. The pipeline will integrate with a GitHub repository.
 ## Table of Contents 
 1. [Create EC2 Instance on AWS](#create-ec2-instance-on-aws)
