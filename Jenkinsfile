@@ -34,7 +34,6 @@ pipeline {
             }
             steps {
                 echo 'Deploying the project...'
-                // Add your deployment steps here
             }
         }
     }
