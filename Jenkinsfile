@@ -35,16 +35,16 @@ pipeline {
     post {
         always {
             script {
-                #def buildStatus = currentBuild.currentResult.toString()
-                #def buildUrl = env.BUILD_URL
-                #def buildNumber = env.BUILD_NUMBER
+                def buildStatus = currentBuild.currentResult.toString()
+                def buildUrl = env.BUILD_URL
+                def buildNumber = env.BUILD_NUMBER
                 def jobName = env.JOB_NAME
-                #def subject = "Pipeline Status: ${jobName} - Build #${buildNumber} - ${buildStatus}"
-                #def body = """
-                #Build Status: ${buildStatus}
-                #Build Number: ${buildNumber}
+                def subject = "Pipeline Status: ${jobName} - Build #${buildNumber} - ${buildStatus}"
+                def body = """
+                Build Status: ${buildStatus}
+                Build Number: ${buildNumber}
                 Job Name: ${jobName}
-                #Build URL: ${buildUrl}
+                Build URL: ${buildUrl}
 
                 Stage Status:
                 Build: ${currentBuild.getBuildStatusSummary('Build')}
