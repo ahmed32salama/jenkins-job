@@ -1,33 +1,42 @@
 pipeline {
     agent any
+
     stages {
         stage('Build') {
             steps {
-                sh 'echo "Building..."'
+                echo 'Building the project...'
+                // Add your build steps here
             }
         }
+
         stage('Test') {
             steps {
-                // Replace this with your test commands
-                sh 'echo "Testing..."'
+                script {
+                    // Simulate test failure with 30% probability
+                    def random = Math.random()
+                    echo "Random number: ${random}"
+                    if (random < 0.3) {
+                        error 'Test failed!'
+                    } else {
+                        echo 'Test passed!'
+                    }
+                }
             }
         }
+
         stage('Deploy') {
             steps {
-                // Replace this with your deploy commands
-                sh 'echo "Deploying..."'
+                echo 'Deploying the project...'
+                // Add your deployment steps here
             }
         }
     }
 
+    // Define global post actions (optional)
     post {
-        success {
-            // Notify success (optional)
-            echo 'Pipeline succeeded!'
-        }
-        failure {
-            // Notify failure (optional)
-            echo 'Pipeline failed!'
+        always {
+            // Clean up any temporary files or resources
+            deleteDir()
         }
     }
 }
