@@ -9,23 +9,19 @@ pipeline {
             }
         }
 
-        stage('Test') {
-            steps {
-                script {
-                    try {
-                        // Run your tests here
-                        // Introduce an intentional error for demonstration
-                        sh 'exit 1'
-                    } catch (err) {
-                        // Log the error message
-                        echo "Test failed with error: ${err.message}"
-                    } finally {
-                        // This block will always run, regardless of whether there was an error
-                        echo 'Test stage complete.'
-                    }
-                }
+        stage('Sign Code') {
+    steps {
+        script {
+            try {
+                pwd()
+                sh "salama.sh"
+            }
+            catch (err) {                                        
+                unstable(message: "${STAGE_NAME} is unstable")
             }
         }
+    }
+}
 
         stage('Deploy') {
             steps {
