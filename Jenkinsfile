@@ -9,24 +9,17 @@ pipeline {
             }
         }
 
-        stage('teast') {
+        stage('Test') {
             steps {
-                script {
-                    try {
-                        pwd()
-                        sh "salama.sh"
-                    } catch (err) {
-                        currentBuild.result = 'UNSTABLE'
-                        echo "Sign Code stage is unstable: ${err}"
-                    }
-                }
+                echo 'Running tests...'
+                // Add your test steps here
             }
         }
 
         stage('Deploy') {
             steps {
                 echo 'Deploying the project...'
-                
+                // Add your deployment steps here
             }
         }
     }
@@ -35,24 +28,12 @@ pipeline {
     post {
         always {
             script {
-                def buildStatus = currentBuild.currentResult.toString()
-                def buildUrl = env.BUILD_URL
-                def buildNumber = env.BUILD_NUMBER
                 def jobName = env.JOB_NAME
-                def subject = "Pipeline Status: ${jobName} - Build #${buildNumber} - ${buildStatus}"
-                def body = """
-                Build Status: ${buildStatus}
-                Build Number: ${buildNumber}
-                Job Name: ${jobName}
-                Build URL: ${buildUrl}
-
-                Stage Status:
-                Build: ${currentBuild.getBuildStatusSummary('Build')}
-                Sign Code: ${currentBuild.getBuildStatusSummary('Sign Code')}
-                Deploy: ${currentBuild.getBuildStatusSummary('Deploy')}
-                """
-
-                emailext body: body, subject: subject, to: '202018656@o6u.edu.eg'
+                def buildStatus = currentBuild.currentResult
+                echo "Sending email notification for ${jobName} - ${buildStatus}"
+                emailext subject: "Job Status: ${jobName} - ${buildStatus}",
+                          body: "The job ${jobName} has finished with status: ${buildStatus}.\n\n${BUILD_URL}",
+                          to: '202018656@o6u.edu.eg'
             }
         }
     }
