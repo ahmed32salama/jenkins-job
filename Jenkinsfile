@@ -9,13 +9,19 @@ pipeline {
             }
         }
 
-        stage('Test') {
+         stage('Sign Code') {
             steps {
-                echo 'Running tests...'
-                // Add your test steps here
+                script {
+                    try {
+                        pwd()
+                        sh "salama.sh"
+                    } catch (err) {
+                        currentBuild.result = 'UNSTABLE'
+                        echo "Sign Code stage is unstable: ${err}"
+                    }
+                }
             }
         }
-
         stage('Deploy') {
             steps {
                 echo 'Deploying the project...'
