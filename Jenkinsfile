@@ -5,7 +5,17 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building the project...'
+                sh 'touch file1'
                 // Add your build steps here
+            }
+            post {
+                success {
+                    echo 'Creating file archive...'
+                    archiveArtifacts artifacts: 'file1', allowEmptyArchive: true
+                }
+                failure {
+                    echo 'Build failed, skipping file archive creation.'
+                }
             }
         }
 
