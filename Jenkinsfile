@@ -3,7 +3,7 @@ pipeline {
 
     parameters {
         choice(
-            name: 'flag',
+            name: 'choose pls',
             choices: ['true', 'false'],
             description: 'Flag to determine pipeline execution'
         )
@@ -16,7 +16,6 @@ pipeline {
             }
             steps {
                 echo 'Building the project...'
-                // Add your build steps here
             }
         }
 
@@ -26,7 +25,6 @@ pipeline {
             }
             steps {
                 echo 'Running tests...'
-                // Add your test steps here
             }
         }
 
@@ -41,7 +39,6 @@ pipeline {
         }
     }
 
-    // Define global post actions (optional)
     post {
         always {
             // Clean up any temporary files or resources
@@ -56,6 +53,6 @@ pipeline {
     }
 
     options {
-        skipDefaultCheckout() // Skip the default checkout to avoid checking out the code if the pipeline is not executed
+        skipDefaultCheckout() 
     }
 }
