@@ -16,9 +16,12 @@ pipeline {
                         // Run your tests here
                         // Introduce an intentional error for demonstration
                         sh 'exit 1'
-                    } catch (Exception e) {
-                        // Handle the test failure gracefully
-                        echo 'Test failed but continuing...'
+                    } catch (err) {
+                        // Log the error message
+                        echo "Test failed with error: ${err.message}"
+                    } finally {
+                        // This block will always run, regardless of whether there was an error
+                        echo 'Test stage complete.'
                     }
                 }
             }
@@ -28,7 +31,15 @@ pipeline {
             steps {
                 echo 'Deploying the project...'
                 // Add your deployment steps here
-                // This stage will run even if the test stage fails
             }
         }
     }
+
+    // Define global post actions (optional)
+    post {
+        always {
+            // Clean up any temporary files or resources
+            deleteDir()
+        }
+    }
+}
