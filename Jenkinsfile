@@ -5,36 +5,38 @@ pipeline {
         choice(
             name: 'flag',
             choices: ['true', 'false'],
-            description: 'Flag to determine pipeline behavior'
+            description: 'Flag to determine pipeline execution'
         )
     }
 
     stages {
         stage('Build') {
+            when {
+                expression { params.flag == 'true' }
+            }
             steps {
                 echo 'Building the project...'
-            }
-            post {
-                success {
-                    echo 'Creating file archive...'
-                    archiveArtifacts artifacts: 'file1', allowEmptyArchive: true
-                }
-                failure {
-                    echo 'Build failed, skipping file archive creation.'
-                }
+                // Add your build steps here
             }
         }
 
         stage('Test') {
+            when {
+                expression { params.flag == 'true' }
+            }
             steps {
-                echo 'Running tests'
+                echo 'Running tests...'
+                // Add your test steps here
             }
         }
 
         stage('Deploy') {
+            when {
+                expression { params.flag == 'true' }
+            }
             steps {
-                echo 'Deploying the project'
-
+                echo 'Deploying the project...'
+                // Add your deployment steps here
             }
         }
     }
@@ -42,18 +44,18 @@ pipeline {
     // Define global post actions (optional)
     post {
         always {
+            // Clean up any temporary files or resources
             deleteDir()
         }
         success {
-            script {
-                if (params.flag == 'true') {
-                    echo 'Flag is true continuing with the pipeline.'
-                } else if (params.flag == 'false') {
-                    echo 'scape for the pipeline'
-                } else {
-                    error "Invalid flag value: ${params.flag}"
-                }
-            }
+            echo 'Pipeline executed successfully.'
         }
+        failure {
+            echo 'Pipeline was not executed.'
+        }
+    }
+
+    options {
+        skipDefaultCheckout() // Skip the default checkout to avoid checking out the code if the pipeline is not executed
     }
 }
