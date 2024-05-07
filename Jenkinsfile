@@ -12,13 +12,13 @@ pipeline {
         stage('Test') {
             steps {
                 script {
-                    // Simulate test failure with 30% probability
-                    def random = Math.random()
-                    echo "Random number: ${random}"
-                    if (random < 0.3) {
-                        error 'Test failed!'
-                    } else {
-                        echo 'Test passed!'
+                    try {
+                        // Run your tests here
+                        // Introduce an intentional error for demonstration
+                        sh 'exit 1'
+                    } catch (Exception e) {
+                        // Handle the test failure gracefully
+                        echo 'Test failed but continuing...'
                     }
                 }
             }
@@ -28,15 +28,7 @@ pipeline {
             steps {
                 echo 'Deploying the project...'
                 // Add your deployment steps here
+                // This stage will run even if the test stage fails
             }
         }
     }
-
-    // Define global post actions (optional)
-    post {
-        always {
-            // Clean up any temporary files or resources
-            deleteDir()
-        }
-    }
-}
