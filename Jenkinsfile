@@ -40,16 +40,21 @@ pipeline {
         }
     }
 
-    post {
+   post {
         always {
-            script {
-                def jobName = env.JOB_NAME
-                def buildStatus = currentBuild.currentResult
-                echo "Sending email notification for ${jobName} - ${buildStatus}"
-                emailext subject: "Job Status: ${jobName} - ${buildStatus}",
-                          body: "The job ${jobName} has finished with status: ${buildStatus}.\n\n${BUILD_URL}",
-                          to: 'seaea.32@gmail.com'
-            }
+            deleteDir()
+        }
+        success {
+            emailext body: 'Build successful',
+                      subject: 'Build successful',
+                      to: 'seaea.32@gmail.com',
+                      attachmentsPattern: 'file1'
+        }
+        failure {
+            emailext body: 'Build failed',
+                      subject: 'Build failed',
+                      to: 'seaea.32@gmail.com',
+                      attachmentsPattern: 'file1'
         }
     }
 }
