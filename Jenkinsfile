@@ -7,21 +7,9 @@ pipeline {
                 echo 'Building the project...'
                 // Add your build steps here
             }
-            post {
-                success {
-                    emailext body: "Build stage succeeded: ${env.BUILD_URL}",
-                             subject: "Build Succeeded: ${env.JOB_NAME} - Build #${env.BUILD_NUMBER}",
-                             to: '202018656@o6u.edu.eg'
-                }
-                failure {
-                    emailext body: "Build stage failed: ${env.BUILD_URL}",
-                             subject: "Build Failed: ${env.JOB_NAME} - Build #${env.BUILD_NUMBER}",
-                             to: '202018656@o6u.edu.eg'
-                }
-            }
         }
 
-        stage('Sign Code') {
+        stage('teast') {
             steps {
                 script {
                     try {
@@ -33,45 +21,39 @@ pipeline {
                     }
                 }
             }
-            post {
-                success {
-                    emailext body: "Sign Code stage succeeded: ${env.BUILD_URL}",
-                             subject: "Sign Code Succeeded: ${env.JOB_NAME} - Build #${env.BUILD_NUMBER}",
-                             to: '202018656@o6u.edu.eg'
-                }
-                failure {
-                    emailext body: "Sign Code stage failed: ${env.BUILD_URL}",
-                             subject: "Sign Code Failed: ${env.JOB_NAME} - Build #${env.BUILD_NUMBER}",
-                             to: '202018656@o6u.edu.eg'
-                }
-            }
         }
 
         stage('Deploy') {
             steps {
                 echo 'Deploying the project...'
-                // Add your deployment steps here
-            }
-            post {
-                success {
-                    emailext body: "Deploy stage succeeded: ${env.BUILD_URL}",
-                             subject: "Deploy Succeeded: ${env.JOB_NAME} - Build #${env.BUILD_NUMBER}",
-                             to: '202018656@o6u.edu.eg'
-                }
-                failure {
-                    emailext body: "Deploy stage failed: ${env.BUILD_URL}",
-                             subject: "Deploy Failed: ${env.JOB_NAME} - Build #${env.BUILD_NUMBER}",
-                             to: '202018656@o6u.edu.eg'
-                }
+                
             }
         }
     }
 
-    // Define global post actions (optional)
+    // Define global post actions
     post {
         always {
-            // Clean up any temporary files or resources
-            deleteDir()
+            script {
+                #def buildStatus = currentBuild.currentResult.toString()
+                #def buildUrl = env.BUILD_URL
+                #def buildNumber = env.BUILD_NUMBER
+                def jobName = env.JOB_NAME
+                #def subject = "Pipeline Status: ${jobName} - Build #${buildNumber} - ${buildStatus}"
+                #def body = """
+                #Build Status: ${buildStatus}
+                #Build Number: ${buildNumber}
+                Job Name: ${jobName}
+                #Build URL: ${buildUrl}
+
+                Stage Status:
+                Build: ${currentBuild.getBuildStatusSummary('Build')}
+                Sign Code: ${currentBuild.getBuildStatusSummary('Sign Code')}
+                Deploy: ${currentBuild.getBuildStatusSummary('Deploy')}
+                """
+
+                emailext body: body, subject: subject, to: '202018656@o6u.edu.eg'
+            }
         }
     }
 }
