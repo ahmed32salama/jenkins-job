@@ -9,7 +9,7 @@ pipeline {
             }
         }
 
-         stage('Sign Code') {
+         stage('teast') {
             steps {
                 script {
                     try {
