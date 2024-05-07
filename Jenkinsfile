@@ -9,15 +9,18 @@ pipeline {
             }
         }
 
-         stage('teast') {
-            steps {
-                script {
-                    try {
-                        pwd()
-                        sh "salama.sh"
-                    } catch (err) {
-                        currentBuild.result = 'UNSTABLE'
-                        echo "Sign Code stage is unstable: ${err}"
+         stage('Run Smoke and Integration Tests') {
+            parallel {
+                stage('Smoke Test') {
+                    steps {
+                        echo 'Running smoke tests...'
+                        // Add your smoke test steps here
+                    }
+                }
+                stage('Integration Test') {
+                    steps {
+                        echo 'Running integration tests...'
+                        // Add your integration test steps here
                     }
                 }
             }
