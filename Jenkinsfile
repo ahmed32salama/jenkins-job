@@ -1,15 +1,22 @@
 pipeline {
     agent any
 
+    parameters {
+        choice(
+            name: 'flag',
+            choices: ['true', 'false'],
+            description: 'Flag to determine pipeline behavior'
+        )
+    }
+
     stages {
         stage('Build') {
             steps {
                 echo 'Building the project...'
-                sh 'touch file1'
             }
             post {
                 success {
-                    echo 'Creating file archive'
+                    echo 'Creating file archive...'
                     archiveArtifacts artifacts: 'file1', allowEmptyArchive: true
                 }
                 failure {
@@ -18,43 +25,35 @@ pipeline {
             }
         }
 
-         stage('Run Smoke and Integration Tests') {
-            parallel {
-                stage('Smoke Test') {
-                    steps {
-                        echo 'Running smoke tests...'
-                        // Add your smoke test steps here
-                    }
-                }
-                stage('Integration Test') {
-                    steps {
-                        echo 'Running integration tests...'
-                    }
-                }
+        stage('Test') {
+            steps {
+                echo 'Running tests'
             }
         }
+
         stage('Deploy') {
             steps {
-                echo 'Deploying the project...'
+                echo 'Deploying the project'
+
             }
         }
     }
 
-   post {
+    // Define global post actions (optional)
+    post {
         always {
             deleteDir()
         }
         success {
-            emailext body: 'Build successful',
-                      subject: 'Build successful',
-                      to: 'seaea.32@gmail.com',
-                      attachmentsPattern: 'file1'
-        }
-        failure {
-            emailext body: 'Build failed',
-                      subject: 'Build failed',
-                      to: 'seaea.32@gmail.com',
-                      attachmentsPattern: 'file1'
+            script {
+                if (params.flag == 'true') {
+                    echo 'Flag is true continuing with the pipeline.'
+                } else if (params.flag == 'false') {
+                    echo 'scape for the pipeline'
+                } else {
+                    error "Invalid flag value: ${params.flag}"
+                }
+            }
         }
     }
 }
